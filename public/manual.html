@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="/favicon.ico" sizes="48x48" />
+  <link rel="apple-touch-icon" href="/logo.png" />
+  <title>利用マニュアル｜福本屋サラダ館 業務アプリ</title>
+  <meta name="description" content="福本屋サラダ館 業務アプリの使い方マニュアル。ログイン・依頼の作成・処理・編集/取消・検索/フィルタ・CSV出力/印刷・店舗別状況の見方を解説します。" />
+  <style>
+    :root {
+      --red: #d12b38;
+      --red-dark: #b91c29;
+      --red-soft: #fdf0f1;
+      --ink: #0f172a;
+      --muted: #475467;
+      --subtle: #5a6472;
+      --line: #e2e6ed;
+      --bg: #f7f8fa;
+      --surface: #ffffff;
+      --info: #1d4ed8;
+      --info-soft: #eef3fd;
+      --warn-soft: #fdf3e2;
+      --warn-fg: #92400e;
+      --ok: #15803d;
+      --ok-soft: #e9f7ee;
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic", Meiryo, sans-serif;
+      line-height: 1.85;
+      -webkit-font-smoothing: antialiased;
+      font-size: 16px;
+    }
+    .wrap { max-width: 820px; margin: 0 auto; padding: 0 20px 80px; }
+
+    /* Header */
+    header.site {
+      background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 100%);
+      color: #fff;
+      padding: 28px 20px 30px;
+    }
+    .site-inner { max-width: 820px; margin: 0 auto; display: flex; align-items: center; gap: 16px; }
+    .logo-badge {
+      width: 56px; height: 56px; border-radius: 16px; background: #fff;
+      display: flex; align-items: center; justify-content: center; flex: none;
+      box-shadow: 0 6px 20px rgba(0,0,0,.18); overflow: hidden;
+    }
+    .logo-badge img { width: 100%; height: 100%; object-fit: contain; }
+    header.site h1 { margin: 0; font-size: 1.35rem; font-weight: 800; letter-spacing: -.01em; }
+    header.site p { margin: 2px 0 0; font-size: .9rem; opacity: .9; }
+
+    a.backlink {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 22px; color: var(--red); text-decoration: none; font-weight: 700; font-size: .95rem;
+    }
+    a.backlink:hover { text-decoration: underline; }
+
+    h2 {
+      font-size: 1.25rem; font-weight: 800; margin: 44px 0 14px; padding-bottom: 8px;
+      border-bottom: 2px solid var(--line); scroll-margin-top: 16px;
+    }
+    h2 .num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; border-radius: 8px; background: var(--red-soft); color: var(--red-dark);
+      font-size: .9rem; font-weight: 800; margin-right: 10px; vertical-align: 2px;
+    }
+    h3 { font-size: 1.05rem; font-weight: 700; margin: 26px 0 10px; }
+    p { margin: 10px 0; }
+    ul, ol { margin: 10px 0; padding-left: 1.4em; }
+    li { margin: 5px 0; }
+    strong { font-weight: 700; }
+    code {
+      background: #f2f4f8; border: 1px solid var(--line); border-radius: 5px;
+      padding: 1px 6px; font-size: .9em; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    /* TOC */
+    nav.toc {
+      background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+      padding: 18px 22px; margin: 28px 0 8px;
+    }
+    nav.toc p { font-weight: 800; margin: 0 0 8px; }
+    nav.toc ol { margin: 0; padding-left: 1.4em; columns: 2; column-gap: 28px; }
+    nav.toc a { color: var(--ink); text-decoration: none; }
+    nav.toc a:hover { color: var(--red-dark); text-decoration: underline; }
+    @media (max-width: 560px) { nav.toc ol { columns: 1; } }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: .95rem; }
+    th, td { border: 1px solid var(--line); padding: 9px 12px; text-align: left; vertical-align: top; }
+    th { background: #f4f6f9; font-weight: 700; }
+    td.center, th.center { text-align: center; }
+
+    /* Callouts */
+    .callout { border-radius: 12px; padding: 14px 16px; margin: 16px 0; border: 1px solid transparent; }
+    .callout p:first-child { margin-top: 0; }
+    .callout p:last-child { margin-bottom: 0; }
+    .callout.tip  { background: var(--ok-soft);   border-color: #c7ead4; }
+    .callout.note { background: var(--info-soft); border-color: #cfe0fb; }
+    .callout.warn { background: var(--warn-soft); border-color: #f3dcb0; color: #7a3e0a; }
+    .callout.danger { background: var(--red-soft); border-color: #f3c8cc; }
+    .callout .lead { font-weight: 800; }
+
+    /* Steps */
+    .url-box {
+      display: inline-block; background: #fff; border: 1px solid var(--line); border-radius: 10px;
+      padding: 8px 14px; font-weight: 700; color: var(--red-dark); word-break: break-all;
+    }
+
+    footer.site { border-top: 1px solid var(--line); margin-top: 50px; padding-top: 18px; color: var(--subtle); font-size: .85rem; }
+
+    .toolbar { position: sticky; top: 0; z-index: 10; background: rgba(247,248,250,.85); backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line); }
+    .toolbar-inner { max-width: 820px; margin: 0 auto; padding: 8px 20px; display: flex; justify-content: flex-end; gap: 10px; }
+    .btn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: #fff;
+      color: var(--ink); border-radius: 9px; padding: 6px 12px; font-size: .85rem; font-weight: 700; cursor: pointer; text-decoration: none; }
+    .btn:hover { background: #f2f4f8; }
+    .btn-primary { background: var(--red); color: #fff; border-color: var(--red); }
+    .btn-primary:hover { filter: brightness(1.06); }
+
+    @media print {
+      .toolbar, a.backlink { display: none !important; }
+      header.site { background: #fff !important; color: #000 !important; border-bottom: 2px solid #000; }
+      header.site .logo-badge { box-shadow: none; border: 1px solid #ccc; }
+      body { background: #fff; font-size: 12px; line-height: 1.6; }
+      h2 { page-break-after: avoid; }
+      table, .callout { page-break-inside: avoid; }
+      a { color: #000; text-decoration: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <div class="toolbar-inner">
+      <a class="btn" href="/">← アプリに戻る</a>
+      <button class="btn btn-primary" onclick="window.print()">🖨 印刷 / PDF保存</button>
+    </div>
+  </div>
+
+  <header class="site">
+    <div class="site-inner">
+      <span class="logo-badge"><img src="/logo.png" alt="福本屋サラダ館 ロゴ" /></span>
+      <div>
+        <h1>福本屋サラダ館 業務アプリ 利用マニュアル</h1>
+        <p>店舗間在庫移動・外部注文依頼の管理</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <p>複数店舗（<strong>矢掛本店・倉敷店・総社店・井原店</strong>）の間でやり取りする
+      「<strong>店舗間の在庫移動依頼</strong>」と「<strong>本店への外部注文依頼</strong>」を、
+      スマホ・パソコンからかんたんに管理するためのアプリです。</p>
+
+    <ul>
+      <li><strong>アプリのURL</strong>：<span class="url-box">https://fukumotoya-salada-kan-eight.vercel.app</span></li>
+      <li>スマホ（推奨）でもパソコンでも使えます。インストール不要。ブラウザでURLを開くだけです。</li>
+    </ul>
+
+    <div class="callout tip">
+      <p class="lead">💡 スマホのホーム画面に追加すると便利です</p>
+      <p>Safari / Chrome で上記URLを開き、共有メニューから「ホーム画面に追加」を選ぶと、
+        アプリのように1タップで開けます（アイコンはトマトのロゴになります）。</p>
+    </div>
+
+    <nav class="toc">
+      <p>目次</p>
+      <ol>
+        <li><a href="#s1">このアプリでできること</a></li>
+        <li><a href="#s2">覚えておきたい用語</a></li>
+        <li><a href="#s3">ログイン（店舗を選ぶ）</a></li>
+        <li><a href="#s4">画面の見方（ホーム）</a></li>
+        <li><a href="#s5">依頼を作成する</a></li>
+        <li><a href="#s6">依頼を探す・絞り込む</a></li>
+        <li><a href="#s7">依頼を処理する</a></li>
+        <li><a href="#s8">依頼を編集・取消する</a></li>
+        <li><a href="#s9">CSV出力・印刷する</a></li>
+        <li><a href="#s10">店舗別の状況を見る</a></li>
+        <li><a href="#s11">従業員を登録・削除する</a></li>
+        <li><a href="#s12">通知・ダークモード</a></li>
+        <li><a href="#s13">よくある質問・注意事項</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="s1"><span class="num">1</span>このアプリでできること</h2>
+    <ul>
+      <li><strong>依頼を出す</strong>：他店舗へ在庫を回してほしいとき／本店へ商品を発注してほしいとき</li>
+      <li><strong>依頼を確認する</strong>：自店宛て・他店の依頼を一覧で確認</li>
+      <li><strong>依頼を進める</strong>：未処理 → 処理中 → 完了 と状況を更新</li>
+      <li><strong>依頼を直す・取り消す</strong>：入力ミスの修正、誤った依頼の取消</li>
+      <li><strong>一覧を出力する</strong>：CSV（Excel）出力・印刷</li>
+      <li><strong>状況を把握する</strong>：店舗ごとの未処理件数をひと目で確認</li>
+    </ul>
+
+    <h2 id="s2"><span class="num">2</span>覚えておきたい用語</h2>
+    <table>
+      <tr><th>用語</th><th>意味</th></tr>
+      <tr><td><strong>依頼</strong></td><td>「○○を△△店へ移してほしい／発注してほしい」という1件のお願い</td></tr>
+      <tr><td><strong>店舗間在庫移動</strong></td><td>自店の在庫を<strong>他店舗へ移す</strong>依頼</td></tr>
+      <tr><td><strong>外部注文依頼</strong></td><td><strong>本店（矢掛本店）へ発注をお願いする</strong>依頼</td></tr>
+      <tr><td><strong>依頼元</strong></td><td>依頼を出した店舗（＝ログイン中の自店）</td></tr>
+      <tr><td><strong>依頼先</strong></td><td>依頼を受けて対応する店舗</td></tr>
+      <tr><td><strong>依頼者</strong></td><td>依頼を出した人（自店の従業員）</td></tr>
+      <tr><td><strong>担当者</strong></td><td>依頼先で対応する人（任意。後から決めてもOK）</td></tr>
+      <tr><td><strong>ステータス</strong></td><td>進み具合。<strong>未処理 → 処理中 → 完了</strong> の3段階</td></tr>
+      <tr><td><strong>必着日</strong></td><td>「この日までに届けてほしい」という期限</td></tr>
+    </table>
+
+    <h2 id="s3"><span class="num">3</span>ログイン（店舗を選ぶ）</h2>
+    <ol>
+      <li>アプリのURLを開きます。</li>
+      <li><strong>「ログインする店舗を選択」</strong>から、<strong>自分の店舗</strong>をタップします（矢掛本店／倉敷店／総社店／井原店）。</li>
+      <li><strong>「ログイン」</strong>ボタンを押します。（店舗名を<strong>ダブルタップ</strong>しても入れます）</li>
+    </ol>
+    <div class="callout tip">
+      <p>✅ 一度ログインすると、次回からは自動でその店舗で開きます。店舗を変えたいときは
+        <strong>「店舗を切り替える」</strong>（PCは左下、スマホは右上のドアのアイコン）を押します。</p>
+    </div>
+
+    <h2 id="s4"><span class="num">4</span>画面の見方（ホーム）</h2>
+    <p>ログインすると最初に表示される画面です。上から順に：</p>
+    <ul>
+      <li><strong>未処理のお知らせ（赤い帯）</strong>：未処理の依頼があると「未処理の依頼が ○ 件あります」と表示。「一覧へ」で依頼一覧に移動します（0件のときは「未処理の依頼はありません」）。</li>
+      <li><strong>集計タイル</strong>：全店の <strong>未処理／処理中／完了</strong> の件数</li>
+      <li><strong>店舗別の状況</strong>：店舗ごとの件数（→ <a href="#s10">10章</a>）</li>
+      <li><strong>最新の依頼</strong>：直近の依頼3件</li>
+    </ul>
+    <h3>ナビゲーション（画面の移動）</h3>
+    <table>
+      <tr><th>場所</th><th>メニュー</th></tr>
+      <tr><td><strong>パソコン</strong></td><td>画面<strong>左</strong>のサイドバー</td></tr>
+      <tr><td><strong>スマホ</strong></td><td>画面<strong>下</strong>のタブ</td></tr>
+    </table>
+    <p>メニューは <strong>ホーム / 新規依頼 / 依頼一覧 / 従業員</strong> の4つです。
+      ヘッダーの「使い方」アイコンからは、いつでもこのマニュアルを開けます。</p>
+
+    <h2 id="s5"><span class="num">5</span>依頼を作成する</h2>
+    <p>メニューの<strong>「新規依頼」</strong>を開きます。（<strong style="color:var(--red-dark)">＊</strong>印は必須項目です）</p>
+    <h3>① 依頼種別を選ぶ（必須）</h3>
+    <ul>
+      <li><strong>店舗間在庫移動</strong>：他店舗へ在庫を移したいとき</li>
+      <li><strong>外部注文依頼</strong>：本店へ発注をお願いしたいとき</li>
+    </ul>
+    <h3>② 各項目を入力する</h3>
+    <table>
+      <tr><th>項目</th><th class="center">必須</th><th>説明</th></tr>
+      <tr><td>依頼元店舗</td><td class="center">–</td><td>ログイン中の自店が自動表示（変更不可）</td></tr>
+      <tr><td><strong>依頼者</strong></td><td class="center">✅</td><td>自店の従業員から選択。※先に<a href="#s11">従業員登録</a>が必要</td></tr>
+      <tr><td><strong>依頼先店舗</strong></td><td class="center">✅※</td><td>「店舗間在庫移動」で選択。「外部注文依頼」は<strong>本店に自動設定</strong></td></tr>
+      <tr><td>処理担当者</td><td class="center">–</td><td>依頼先店舗の従業員から選べる（未定でもOK）</td></tr>
+      <tr><td><strong>品名</strong></td><td class="center">✅</td><td>例：シーザーサラダ用ドレッシング</td></tr>
+      <tr><td><strong>品番</strong></td><td class="center">✅</td><td>例：DRS-1024</td></tr>
+      <tr><td>色番</td><td class="center">–</td><td>例：RD-赤（色の指定がある場合のみ）</td></tr>
+      <tr><td><strong>数量</strong></td><td class="center">✅</td><td>1以上の数字</td></tr>
+      <tr><td><strong>必着日</strong></td><td class="center">✅</td><td>届けてほしい期限日</td></tr>
+      <tr><td>備考</td><td class="center">–</td><td>納品時間の希望、用途など</td></tr>
+    </table>
+    <h3>③ 送信する</h3>
+    <p><strong>「依頼を送信」</strong>を押すと依頼が登録され、依頼一覧に移動します。（途中でやめるときは「キャンセル」）</p>
+    <div class="callout warn">
+      <p>⚠️ 必須項目が空のまま送信しようとすると、足りない項目が赤く表示され、一番上の未入力欄に自動でカーソルが移動します。</p>
+    </div>
+
+    <h2 id="s6"><span class="num">6</span>依頼を探す・絞り込む（依頼一覧）</h2>
+    <p>メニューの<strong>「依頼一覧」</strong>を開きます。次の方法で目的の依頼を探せます。</p>
+    <ul>
+      <li><strong>キーワード検索</strong>：上部の検索ボックスに、品名・品番・依頼者・店舗名を入力</li>
+      <li><strong>ステータスで絞り込み</strong>：<strong>全件／未処理／処理中／完了</strong> のボタン（横の数字は件数）</li>
+      <li><strong>絞り込みメニュー</strong>（3つ）
+        <ul>
+          <li><strong>種別</strong>：すべて／店舗間在庫移動／外部注文依頼</li>
+          <li><strong>店舗</strong>：すべて／各店舗（依頼元・依頼先のどちらかが一致するもの）</li>
+          <li><strong>並び替え</strong>：新しい順／必着日が近い順</li>
+        </ul>
+      </li>
+      <li><strong>絞り込みをクリア</strong>：条件を変えると表示されるボタン。押すと全条件をリセット</li>
+    </ul>
+    <div class="callout note">
+      <p>💡 表示件数は上部に「○ 件 / 全○件」と出ます。条件に合う依頼が無いときは「該当する依頼がありません」と表示されます。</p>
+    </div>
+
+    <h2 id="s7"><span class="num">7</span>依頼を処理する（ステータスを進める／戻す）</h2>
+    <p>各依頼カードの右下のボタンで、状況を更新します。</p>
+    <table>
+      <tr><th>今の状態</th><th>押すボタン</th><th>変わる先</th></tr>
+      <tr><td>未処理</td><td><strong>処理を開始</strong></td><td>処理中</td></tr>
+      <tr><td>処理中</td><td><strong>完了にする</strong></td><td>完了</td></tr>
+    </table>
+    <h3>ひとつ前に戻す（差し戻し）</h3>
+    <p>間違えて進めてしまったときは、カード左下の <strong>↩（戻す）アイコン</strong> を押すと、
+      1つ前のステータスに戻せます（完了 → 処理中 → 未処理）。</p>
+
+    <h2 id="s8"><span class="num">8</span>依頼を編集・取消する</h2>
+    <p>各依頼カードの左下にアイコンがあります。</p>
+    <ul>
+      <li><strong>✏️（鉛筆）= 編集</strong>：押すと編集画面（ポップアップ）が開きます。品名・数量・必着日・依頼先などすべての項目を直せます。<strong>「変更を保存」</strong>で確定します。</li>
+      <li><strong>🗑（ゴミ箱）= 取消（削除）</strong>：誤って出した依頼を取り消します。確認メッセージ「依頼を取り消しますか？」で<strong>「取り消す」</strong>を押すと削除されます。</li>
+    </ul>
+    <div class="callout danger">
+      <p class="lead">⚠️ 取消（削除）は元に戻せません。</p>
+      <p>よく確認してから実行してください。「やっぱり残したい」場合は、編集や差し戻しで対応できないか先に検討してください。</p>
+    </div>
+
+    <h2 id="s9"><span class="num">9</span>一覧をCSV出力・印刷する</h2>
+    <p>「依頼一覧」画面の右上にボタンがあります。</p>
+    <ul>
+      <li><strong>CSV</strong>：<strong>いま表示中（絞り込み後）の依頼</strong>をCSVファイルで保存します。
+        Excelで開いても文字化けしません。ファイル名は「サラダ館_依頼一覧_日付.csv」です。</li>
+      <li><strong>印刷</strong>：印刷用のきれいな表で印刷できます（ブラウザの印刷画面が開きます）。
+        店舗名・出力日時・件数が表の上に印字されます。PDFにしたいときは印刷画面で「送信先＝PDFに保存」を選びます。</li>
+    </ul>
+    <div class="callout note">
+      <p>💡 出力されるのは<strong>絞り込んだ結果そのまま</strong>です。「未処理だけ」「自店の分だけ」など、先に絞り込んでから出力すると便利です。</p>
+    </div>
+
+    <h2 id="s10"><span class="num">10</span>店舗別の状況を見る</h2>
+    <p>ホーム画面の<strong>「店舗別の状況」</strong>では、<strong>各店舗が対応する依頼（依頼先ごと）</strong>の件数を一覧できます。</p>
+    <ul>
+      <li>各店舗ごとに <strong>未処理／処理中／完了</strong> の件数が並びます。</li>
+      <li><strong>自店には「自店」ラベルと枠の強調</strong>がつきます。</li>
+      <li>件数が0のところは薄く表示され、対応が必要な店舗（数字に色がついた箇所）がひと目で分かります。</li>
+    </ul>
+
+    <h2 id="s11"><span class="num">11</span>従業員を登録・削除する</h2>
+    <p>新規依頼の「依頼者」「処理担当者」で名前を選べるようにするため、あらかじめ従業員を登録しておきます。メニューの<strong>「従業員」</strong>を開きます。</p>
+    <ul>
+      <li><strong>追加</strong>：自店の欄に名前（例：山田 太郎）を入力し<strong>「追加」</strong></li>
+      <li><strong>削除</strong>：自店の従業員の右にある🗑アイコン →「削除する」（確認あり）。削除しても<strong>過去の依頼に記録された担当者名はそのまま残ります</strong>。</li>
+      <li><strong>他店の従業員は閲覧のみ</strong>（追加・削除はできません）。</li>
+    </ul>
+
+    <h2 id="s12"><span class="num">12</span>通知・ダークモード</h2>
+    <p>画面右上のアイコンで操作します。</p>
+    <ul>
+      <li><strong>🔔（ベル）= 通知</strong>：他店からの依頼などのお知らせ。未読件数が赤い数字で出ます。「すべて既読」で未読を消せます。</li>
+      <li><strong>🌙／☀️（月・太陽）= 表示テーマ</strong>：明るい画面（ライト）と暗い画面（ダーク）を切り替えられます。選んだ設定はこの端末に記憶されます。</li>
+    </ul>
+
+    <h2 id="s13"><span class="num">13</span>よくある質問・注意事項</h2>
+    <div class="callout danger">
+      <p class="lead">❗ もっとも大切な注意：データは「この端末の中」に保存されます</p>
+      <p>現在のアプリは、入力した依頼・従業員などのデータを<strong>使っている端末（ブラウザ）の中だけ</strong>に保存しています。そのため：</p>
+      <ul>
+        <li><strong>店舗A で入力した依頼は、店舗B の端末には表示されません</strong>（端末ごとに別々）。</li>
+        <li>同じ端末・同じブラウザで使い続ければ、データは残ります。</li>
+        <li>ブラウザの履歴・サイトデータを消去すると、<strong>データも消えます</strong>。</li>
+      </ul>
+      <p>📌 「全店舗で同じ依頼を共有したい」場合は、<strong>共有データベース化</strong>という追加対応が必要です。ご希望の場合は管理者（小屋）までご相談ください。</p>
+    </div>
+
+    <h3>Q. スマホでもパソコンでも使えますか？</h3>
+    <p>はい。どちらでも使えます。画面はそれぞれに合わせて自動で整います。</p>
+    <h3>Q. おすすめのブラウザは？</h3>
+    <p>スマホは Safari / Chrome、パソコンは Chrome / Edge / Safari の最新版を推奨します。</p>
+    <h3>Q. 依頼を間違えて完了にしてしまいました。</h3>
+    <p>カード左下の <strong>↩（戻す）アイコン</strong>で1つ前の状態に戻せます（<a href="#s7">7章</a>）。</p>
+    <h3>Q. 取り消した依頼を元に戻せますか？</h3>
+    <p><strong>戻せません。</strong> 取消（削除）は慎重に行ってください。</p>
+    <h3>Q. ログインにパスワードは必要ですか？</h3>
+    <p>現在は店舗を選ぶだけで入れます（パスワードはありません）。</p>
+    <h3>困ったときは</h3>
+    <p>操作で分からないことや不具合があれば、管理者（小屋）までご連絡ください。</p>
+
+    <a class="backlink" href="/">← アプリに戻る</a>
+
+    <footer class="site">
+      <p>福本屋サラダ館 業務アプリ 利用マニュアル ／ 最終更新：2026-06-16</p>
+    </footer>
+  </div>
+</body>
+</html>

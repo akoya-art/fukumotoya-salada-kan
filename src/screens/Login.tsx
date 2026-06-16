@@ -87,6 +87,16 @@ export function Login() {
         <p className="mt-5 text-center text-xs leading-relaxed text-muted">
           ※ プロトタイプ版です。データはこの端末内（localStorage）に保存されます。
         </p>
+        <p className="mt-2 text-center text-xs">
+          <a
+            href="/manual.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="focus-ring rounded font-semibold text-accent hover:underline"
+          >
+            使い方マニュアルを見る
+          </a>
+        </p>
       </motion.div>
     </main>
   )

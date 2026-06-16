@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import {
-  Bell, CheckCheck, Home, ListChecks, LogOut, Moon, PlusCircle, Sun, Users,
+  Bell, BookOpen, CheckCheck, Home, ListChecks, LogOut, Moon, PlusCircle, Sun, Users,
 } from 'lucide-react'
 import { useApp } from '@/lib/store'
 import { STORES } from '@/data/seed'
@@ -181,6 +181,15 @@ export function Layout({ page, onNavigate, children }: { page: Page; onNavigate:
               </div>
             </div>
             <div className="flex items-center gap-0.5">
+              <a
+                href="/manual.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="使い方マニュアルを開く（新しいタブ）"
+                className="focus-ring relative inline-flex h-10 w-10 items-center justify-center rounded-xl text-muted transition-colors hover:bg-surface-2 hover:text-ink active:scale-95"
+              >
+                <BookOpen className="h-5 w-5" />
+              </a>
               <ThemeToggle />
               <NotificationBell />
               <IconButton label="店舗を切り替える" onClick={logout} className="lg:hidden"><LogOut className="h-5 w-5" /></IconButton>
