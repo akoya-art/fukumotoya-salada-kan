@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+    <meta name="theme-color" content="#d12b38" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0c0e13" media="(prefers-color-scheme: dark)" />
+    <title>福本屋サラダ館｜店舗間在庫移動・外部注文依頼管理</title>
+    <meta
+      name="description"
+      content="複数店舗を持つ福本屋サラダ館向けの業務アプリ。店舗間の在庫移動依頼と本店への外部注文依頼を一元管理し、未処理タスクと通知をスマホからすぐ確認できます。"
+    />
+    <script>
+      // Apply saved theme before paint to avoid flash
+      (function () {
+        try {
+          var t = localStorage.getItem('fsk.theme');
+          var dark = t ? t === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (dark) document.documentElement.classList.add('dark');
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

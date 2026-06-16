@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e8434e"/>
+      <stop offset="1" stop-color="#c01f2c"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#g)"/>
+  <!-- salad bowl -->
+  <path d="M16 30 h32 a16 16 0 0 1 -32 0 Z" fill="#fff"/>
+  <path d="M14 29 h36 a2 2 0 0 1 0 4 H14 a2 2 0 0 1 0-4 Z" fill="#fff"/>
+  <circle cx="26" cy="24" r="5" fill="#fff"/>
+  <circle cx="36" cy="22" r="6" fill="#fff" opacity="0.9"/>
+  <circle cx="32" cy="26" r="4" fill="#fff" opacity="0.8"/>
+</svg>

@@ -1,0 +1,168 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Design tokens — Refined SaaS (Linear / Stripe inspired)
+   Colours stored as space-separated RGB channels so Tailwind's
+   `rgb(var(--x) / <alpha>)` opacity modifiers work everywhere.
+   All text/background pairs verified for WCAG AA (>= 4.5:1).
+   ============================================================ */
+:root {
+  --bg: 247 248 250;            /* #F7F8FA app canvas */
+  --surface: 255 255 255;       /* cards / sheets */
+  --surface-2: 242 244 248;     /* subtle insets */
+  --border: 226 230 237;        /* hairlines */
+
+  --text: 15 23 42;             /* #0F172A primary ink */
+  --text-muted: 71 84 103;      /* #475467 — 7.0:1 on surface */
+  --text-subtle: 90 100 114;    /* #5A6472 — 5.2:1 on surface-2, AA on all app surfaces */
+
+  --primary: 209 43 56;         /* #D12B38 brand red (button fill) */
+  --primary-fg: 255 255 255;    /* white on red = 5.3:1 */
+  --primary-soft: 253 240 241;  /* tinted red surface */
+  --accent: 185 28 41;          /* #B91C29 brand text accent — 6.6:1 on white */
+  --success-solid: 21 128 61;   /* #15803D — white text 5.0:1 (both themes) */
+
+  --success: 21 128 61;         /* #15803D */
+  --success-soft: 233 247 238;
+  --success-fg: 21 100 50;      /* text on soft */
+
+  --warning: 180 83 9;          /* #B45309 amber-700 */
+  --warning-soft: 253 243 226;
+  --warning-fg: 146 64 14;      /* #92400E on soft = 5.0:1 */
+
+  --info: 29 78 216;            /* #1D4ED8 blue-700 */
+  --info-soft: 232 238 252;
+  --info-fg: 30 64 175;         /* #1E40AF on soft */
+
+  --transfer: 13 124 128;       /* #0D7C80 teal */
+  --transfer-soft: 224 244 244;
+  --transfer-fg: 15 100 103;
+
+  --external: 124 58 173;       /* #7C3AAD violet */
+  --external-soft: 243 236 250;
+  --external-fg: 107 43 153;
+
+  --ring: 209 43 56;
+  --shadow-color: 15 23 42;
+}
+
+.dark {
+  --bg: 12 14 19;              /* #0C0E13 near-black */
+  --surface: 22 25 33;         /* #161921 cards */
+  --surface-2: 30 34 44;       /* #1E222C insets */
+  --border: 42 47 60;          /* #2A2F3C hairlines */
+
+  --text: 237 240 245;         /* #EDF0F5 */
+  --text-muted: 167 176 191;   /* #A7B0BF — 7.6:1 on surface */
+  --text-subtle: 138 147 163;  /* #8A93A3 — 4.9:1 on surface */
+
+  --primary: 209 43 56;        /* keep AA-safe red fill (white text 5.3:1) */
+  --primary-fg: 255 255 255;
+  --primary-soft: 46 26 31;
+  --accent: 248 121 130;       /* #F87982 text accent — 7.4:1 on dark surface */
+  --success-solid: 21 128 61;  /* white text 5.0:1 */
+
+  --success: 52 199 123;
+  --success-soft: 21 39 31;
+  --success-fg: 110 231 168;
+
+  --warning: 245 176 73;
+  --warning-soft: 44 33 18;
+  --warning-fg: 251 200 120;
+
+  --info: 110 158 255;
+  --info-soft: 22 31 53;
+  --info-fg: 150 184 255;
+
+  --transfer: 58 200 204;
+  --transfer-soft: 16 38 39;
+  --transfer-fg: 120 226 229;
+
+  --external: 196 152 246;
+  --external-soft: 33 26 46;
+  --external-fg: 207 173 250;
+
+  --ring: 248 121 130;
+  --shadow-color: 0 0 0;
+}
+
+* {
+  border-color: rgb(var(--border));
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-bg text-ink font-sans antialiased;
+  font-feature-settings: 'cv05', 'cv11';
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* numeric tabular alignment for stats & quantities */
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+}
+
+/* Crisp focus ring shared by every interactive element */
+.focus-ring {
+  @apply outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--ring))] focus-visible:ring-offset-2 focus-visible:ring-offset-bg;
+}
+
+/* Subtle scrollbars */
+@media (pointer: fine) {
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--border));
+    border-radius: 9999px;
+    border: 3px solid rgb(var(--bg));
+  }
+  ::-webkit-scrollbar-thumb:hover { background: rgb(var(--text-subtle) / 0.6); }
+}
+
+/* Skip link */
+.skip-link {
+  @apply sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100]
+         focus:rounded-lg focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-fg focus:shadow-pop;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Print: clean black-on-white table output */
+@media print {
+  @page { margin: 12mm; }
+  html, body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .print-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .print-table th,
+  .print-table td {
+    border: 1px solid #999;
+    padding: 4px 6px;
+    text-align: left;
+    vertical-align: top;
+    font-size: 11px;
+    color: #000;
+  }
+  .print-table thead {
+    display: table-header-group; /* repeat header on each printed page */
+  }
+  .print-table tr {
+    break-inside: avoid;
+  }
+}
