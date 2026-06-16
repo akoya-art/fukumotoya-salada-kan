@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import {
-  Bell, CheckCheck, Home, ListChecks, LogOut, Moon, PlusCircle, Salad, Sun, Users,
+  Bell, CheckCheck, Home, ListChecks, LogOut, Moon, PlusCircle, Sun, Users,
 } from 'lucide-react'
 import { useApp } from '@/lib/store'
 import { STORES } from '@/data/seed'
@@ -24,8 +24,8 @@ const PAGE_TITLE: Record<Page, string> = {
 function Brand({ compact }: { compact?: boolean }) {
   return (
     <div className="flex items-center gap-2.5">
-      <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-b from-[#e8434e] to-[#c01f2c] text-white shadow-sm">
-        <Salad className="h-5 w-5" />
+      <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-black/5">
+        <img src="/logo.png" alt="" className="h-full w-full object-contain" />
       </span>
       {!compact && (
         <span className="text-[15px] font-extrabold tracking-tight text-ink">福本屋サラダ館</span>

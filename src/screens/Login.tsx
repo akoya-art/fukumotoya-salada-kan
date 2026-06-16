@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ChevronRight, Salad, Store } from 'lucide-react'
+import { ChevronRight, Store } from 'lucide-react'
 import { STORES } from '@/data/seed'
 import type { StoreId } from '@/types'
 import { useApp } from '@/lib/store'
@@ -27,9 +27,9 @@ export function Login() {
           <motion.span
             initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.1, type: 'spring', stiffness: 260, damping: 18 }}
-            className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-b from-[#e8434e] to-[#c01f2c] text-white shadow-lift"
+            className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-2xl bg-white shadow-lift ring-1 ring-black/5"
           >
-            <Salad className="h-8 w-8" />
+            <img src="/logo.png" alt="福本屋サラダ館 ロゴ" className="h-full w-full object-contain p-1" />
           </motion.span>
           <h1 className="mt-4 text-2xl font-extrabold tracking-tight text-ink">福本屋サラダ館</h1>
           <p className="mt-1 text-sm text-muted">店舗間在庫移動・外部注文依頼の管理</p>
